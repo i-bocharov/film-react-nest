@@ -15,7 +15,10 @@ import { OrderService } from './order/order.service';
       isGlobal: true,
       cache: true,
     }),
-    // @todo: Добавьте раздачу статических файлов из public
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'public'),
+      serveRoot: '/content/afisha',
+    }),
   ],
   controllers: [FilmsController, OrderController],
   providers: [configProvider, FilmsService, OrderService],
