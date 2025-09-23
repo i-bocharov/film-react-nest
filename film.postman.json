@@ -66,7 +66,7 @@
 					]
 				},
 				{
-					"name": "return actual shedule for selected film",
+					"name": "return actual schedule for selected film",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -76,14 +76,14 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/films/:id/shedule",
+							"raw": "{{baseUrl}}/films/:id/schedule",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"films",
 								":id",
-								"shedule"
+								"schedule"
 							],
 							"variable": [
 								{
@@ -93,7 +93,7 @@
 								}
 							]
 						},
-						"description": "return actual shedule for selected film"
+						"description": "return actual schedule for selected film"
 					},
 					"response": [
 						{
@@ -107,14 +107,14 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/films/:id/shedule",
+									"raw": "{{baseUrl}}/films/:id/schedule",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"films",
 										":id",
-										"shedule"
+										"schedule"
 									],
 									"variable": [
 										{
