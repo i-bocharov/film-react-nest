@@ -1,14 +1,17 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { FilmsService } from './films.service';
 
 @Controller('films')
 export class FilmsController {
+  constructor(private readonly filmsService: FilmsService) {}
+
   /**
    * Этот метод будет обрабатывать GET-запросы на /api/afisha/films
    * и возвращать список всех фильмов
    */
   @Get()
   findAll(): string {
-    return 'Этот метод возвращает список всех фильмов';
+    return this.filmsService.findAll();
   }
 
   /**
@@ -18,6 +21,6 @@ export class FilmsController {
    */
   @Get(':id/schedule')
   findFilmSchedule(@Param('id') id: string): string {
-    return `Этот метод вернёт расписание для фильма с id ${id}`;
+    return this.filmsService.findFilmSchedule(id);
   }
 }
