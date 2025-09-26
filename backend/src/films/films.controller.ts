@@ -1,26 +1,43 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { FilmsService } from './films.service';
+import {
+  FilmIdParamDto,
+  FindAllFilmsResponseDto,
+  FindFilmScheduleResponseDto,
+} from './dto/films.dto';
 
 @Controller('films')
 export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
   /**
-   * Этот метод будет обрабатывать GET-запросы на /api/afisha/films
-   * и возвращать список всех фильмов
+   * Обрабатывает GET-запросы на /api/afisha/films.
+   * Возвращает список всех фильмов в формате FindAllFilmsResponseDto.
    */
   @Get()
-  findAll(): string {
-    return this.filmsService.findAll();
+  async findAll(): Promise<FindAllFilmsResponseDto> {
+    const films = await this.filmsService.findAll();
+
+    return {
+      total: films.length,
+      items: films,
+    };
   }
 
   /**
-   * Этот метод будет обрабатывать GET-запросы на /api/afisha/films/:id/schedule
-   * и возвращать расписание для конкретного фильма по его id
-   * @param id - динамический параметр из URL
+   * Обрабатывает GET-запросы на /api/afisha/films/:id/schedule.
+   * Возвращает расписание для конкретного фильма по его id в формате FindFilmScheduleResponseDto.
+   * @param params - Объект, содержащий динамический параметр 'id' из URL.
    */
   @Get(':id/schedule')
-  findFilmSchedule(@Param('id') id: string): string {
-    return this.filmsService.findFilmSchedule(id);
+  async findFilmSchedule(
+    @Param() params: FilmIdParamDto,
+  ): Promise<FindFilmScheduleResponseDto> {
+    const film = await this.filmsService.findOne(params.id);
+
+    return {
+      total: film.schedule.length,
+      items: film.schedule,
+    };
   }
 }
