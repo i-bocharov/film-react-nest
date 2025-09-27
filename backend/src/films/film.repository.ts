@@ -6,4 +6,5 @@ import { FilmEntity } from './entities/film.entity';
 export abstract class IFilmRepository {
   abstract findAll(): Promise<FilmEntity[]>;
   abstract findById(id: string): Promise<FilmEntity | null>;
+  abstract update(film: FilmEntity): Promise<FilmEntity>;
 }

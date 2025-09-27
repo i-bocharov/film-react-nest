@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { FilmEntity } from 'src/films/entities/film.entity';
 import * as initialDb from '../../test/mongodb_initial_stub.json';
 import { IFilmRepository } from 'src/films/film.repository';
@@ -34,5 +34,21 @@ export class InMemoryFilmRepository implements IFilmRepository {
 
     // Возвращаем копию найденного фильма или null.
     return film ? JSON.parse(JSON.stringify(film)) : null;
+  }
+
+  /**
+   * Находит фильм по ID и обновляет его данные.
+   * @param filmToUpdate - Сущность фильма с обновленными данными.
+   */
+  async update(filmToUpdate: FilmEntity): Promise<FilmEntity> {
+    const filmIndex = this.films.findIndex((f) => f.id === filmToUpdate.id);
+
+    if (filmIndex === -1) {
+      throw new NotFoundException(`Фильм с ID ${filmToUpdate.id} не найден`);
+    }
+
+    this.films[filmIndex] = filmToUpdate;
+
+    return JSON.parse(JSON.stringify(this.films[filmIndex]));
   }
 }
