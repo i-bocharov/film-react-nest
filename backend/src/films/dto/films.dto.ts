@@ -87,7 +87,7 @@ export class ScheduleDto {
     description: 'Номер зала',
     example: '2',
   })
-  hall: string;
+  hall: number;
 
   @ApiProperty({
     description: 'Количество рядов в зале',

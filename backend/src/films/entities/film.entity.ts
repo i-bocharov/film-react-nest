@@ -1,7 +1,7 @@
 export class ScheduleEntity {
   id: string;
   daytime: string;
-  hall: string;
+  hall: number;
   rows: number;
   seats: number;
   price: number;
