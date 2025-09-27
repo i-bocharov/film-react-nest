@@ -5,6 +5,7 @@ import { IFilmRepository } from 'src/films/film.repository';
 
 @Module({
   providers: [
+    configProvider,
     InMemoryFilmRepository,
     {
       // Предоставляем IFilmRepository, используя фабрику для условного выбора реализации.

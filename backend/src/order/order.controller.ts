@@ -16,6 +16,6 @@ export class OrderController {
     @Body(new ParseArrayPipe({ items: CreateOrderDto }))
     createOrdersDto: CreateOrderDto[],
   ) {
-    return this.orderService.create(createOrdersDto);
+    // return this.orderService.create(createOrdersDto);
   }
 }
