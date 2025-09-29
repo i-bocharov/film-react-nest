@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, NotFoundException, Param } from '@nestjs/common';
 import { FilmsService } from './films.service';
 import {
   FilmIdParamDto,
@@ -34,6 +34,10 @@ export class FilmsController {
     @Param() params: FilmIdParamDto,
   ): Promise<FindFilmScheduleResponseDto> {
     const film = await this.filmsService.findOne(params.id);
+
+    if (!film) {
+      throw new NotFoundException(`Фильм с ID ${params.id} не найден`);
+    }
 
     return {
       total: film.schedule.length,

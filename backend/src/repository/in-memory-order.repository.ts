@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OrderEntity } from 'src/order/entities/order.entity';
 import { IOrderRepository } from 'src/order/order.repository';
-import { v4 as uuid4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class InMemoryOrderRepository implements IOrderRepository {
@@ -17,7 +17,7 @@ export class InMemoryOrderRepository implements IOrderRepository {
   async create(ordersData: OrderEntity[]): Promise<OrderEntity[]> {
     const newOrders = ordersData.map((order) => ({
       ...order, // Копируем все существующие данные заказа
-      id: uuid4(), // Генерируем уникальный ID для каждого заказа
+      id: uuidv4(), // Генерируем уникальный ID для каждого заказа
     }));
 
     this.orders.push(...newOrders);

@@ -1,4 +1,9 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { IFilmRepository } from 'src/films/film.repository';
 import { IOrderRepository } from './order.repository';
 import { CreateOrderDto } from './dto/order.dto';
@@ -47,7 +52,7 @@ export class OrderService {
 
       // Проверяем, занято ли место
       if (schedule.taken.includes(seatString)) {
-        throw new NotFoundException(
+        throw new ConflictException(
           `Место ${seatString} уже занято на сеанс с ID ${orderDto.session}`,
         );
       }
@@ -64,8 +69,8 @@ export class OrderService {
       // Добавляем новый заказ в список для сохранения
       newOrderEntities.push({
         id: '', // ID будет сгенерирован репозиторием при сохранении
-        filmId: orderDto.film,
-        scheduleId: orderDto.session,
+        film: orderDto.film,
+        session: orderDto.session,
         daytime: orderDto.daytime,
         row: orderDto.row,
         seat: orderDto.seat,

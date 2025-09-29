@@ -1,7 +1,7 @@
 export class OrderEntity {
   id: string;
-  filmId: string;
-  scheduleId: string;
+  film: string;
+  session: string;
   daytime: string;
   row: number;
   seat: number;

@@ -108,10 +108,10 @@ export class CreatedOrderItemDto {
   id: string;
 
   @ApiProperty({ description: 'ID фильма, на который куплен билет' })
-  filmId: string;
+  film: string;
 
   @ApiProperty({ description: 'ID сеанса, на который куплен билет' })
-  scheduleId: string;
+  session: string;
 
   @ApiProperty({ description: 'Дата и время сеанса' })
   daytime: string;
