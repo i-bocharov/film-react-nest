@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 /**
  * @Schema({ _id: false }) - эта опция важна.
@@ -32,6 +32,10 @@ export class Schedule {
 }
 // Создаем саму Mongoose-схему из класса Schedule
 export const ScheduleSchema = SchemaFactory.createForClass(Schedule);
+
+// Это говорит TypeScript, что объект Schedule в базе данных - это не просто
+// класс, а Mongoose Subdocument, у которого есть методы типа .toObject()
+export type ScheduleDocument = Schedule & Types.Subdocument;
 
 /**
  * Это "Document" тип для Film. Он объединяет наш класс Film
@@ -75,7 +79,7 @@ export class Film {
   cover: string;
 
   @Prop({ type: [ScheduleSchema] })
-  schedule: Schedule[];
+  schedule: Types.DocumentArray<ScheduleDocument>;
 }
 
 // Создаем саму Mongoose-схему из класса Film
