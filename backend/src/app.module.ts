@@ -5,6 +5,8 @@ import * as path from 'node:path';
 
 import { FilmsModule } from './films/films.module';
 import { OrderModule } from './order/order.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AppConfig, configProvider } from './app.config.provider';
 
 @Module({
   imports: [
@@ -16,10 +18,16 @@ import { OrderModule } from './order/order.module';
       rootPath: path.join(__dirname, '..', 'content', 'afisha'),
       serveRoot: '/content/afisha',
     }),
+    MongooseModule.forRootAsync({
+      useFactory: (config: AppConfig) => ({
+        uri: config.database.url,
+      }),
+      inject: [configProvider.provide],
+    }),
     FilmsModule,
     OrderModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [configProvider],
 })
 export class AppModule {}
