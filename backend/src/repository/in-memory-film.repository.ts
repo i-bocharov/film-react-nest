@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { FilmEntity } from 'src/films/entities/film.entity';
-import * as initialDb from '../../test/mongodb_initial_stub.json';
+import initialDb from '../../test/mongodb_initial_stub.json';
 import { IFilmRepository } from 'src/films/film.repository';
 
 @Injectable()
