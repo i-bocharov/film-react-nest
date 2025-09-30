@@ -9,6 +9,7 @@ import {
   IsNumber,
   IsPhoneNumber,
   IsPositive,
+  IsString,
   IsUUID,
   Min,
   ValidateNested,
@@ -19,10 +20,9 @@ import {
  */
 export class CreateOrderDto {
   @ApiProperty({
-    description: 'ID фильма',
-    example: '64145bb0-996a-4644-b351-af6dc1266514',
+    description: 'Уникальный ID фильма',
   })
-  @IsUUID('4', { message: 'Поле film должно быть валидным UUID' })
+  @IsString({ message: 'Поле film должно быть строкой' })
   @IsNotEmpty({ message: 'Поле film не должно быть пустым' })
   film: string;
 

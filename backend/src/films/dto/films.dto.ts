@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsUUID } from 'class-validator';
+import { IsString } from 'class-validator';
 
 // DTO для описания одного фильма (в списке)
 export class FilmDto {
@@ -131,6 +131,9 @@ export class FindFilmScheduleResponseDto {
 
 // DTO для валидации ID фильма в параметрах URL
 export class FilmIdParamDto {
-  @IsUUID('4', { message: 'ID фильма должен быть валидным UUID' })
+  @ApiProperty({
+    description: 'Уникальный идентификатор фильма',
+  })
+  @IsString()
   id: string;
 }
