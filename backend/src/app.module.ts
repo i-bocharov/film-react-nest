@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { ConfigModule } from '@nestjs/config';
+
 import * as path from 'node:path';
 
 import { FilmsModule } from './films/films.module';
 import { OrderModule } from './order/order.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { AppConfig, configProvider } from './app.config.provider';
 
 @Module({
   imports: [
@@ -19,15 +19,16 @@ import { AppConfig, configProvider } from './app.config.provider';
       serveRoot: '/content/afisha',
     }),
     MongooseModule.forRootAsync({
-      useFactory: (config: AppConfig) => ({
-        uri: config.database.url,
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get<string>('DATABASE_URL'),
       }),
-      inject: [configProvider.provide],
+      inject: [ConfigService],
     }),
     FilmsModule,
     OrderModule,
   ],
   controllers: [],
-  providers: [configProvider],
+  providers: [],
 })
 export class AppModule {}
