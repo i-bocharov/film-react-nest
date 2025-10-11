@@ -4,7 +4,7 @@ servers:
     url: https://stub.practicum-team.ru/api/afisha
 info:
   description: Yandex Practicum «Film!» project api
-  version: "1.0.0"
+  version: '1.0.0'
   title: Afisha Api
   contact:
     email: aleksei-mart@yandex-team.ru
@@ -34,7 +34,7 @@ paths:
                         - $ref: '#/components/schemas/Film'
   /films/{id}/schedule:
     get:
-      description: return actual shedule for selected film
+      description: return actual schedule for selected film
       parameters:
         - in: path
           name: id
@@ -60,7 +60,7 @@ paths:
                     items:
                       type: object
                       allOf:
-                        - $ref: '#/components/schemas/Shedule'
+                        - $ref: '#/components/schemas/Schedule'
   /order:
     description: buy tickets
     post:
@@ -164,7 +164,7 @@ components:
         cover:
           type: string
           example: '/images/bg1c.jpg'
-    Shedule:
+    Schedule:
       type: object
       properties:
         id:
@@ -188,10 +188,10 @@ components:
           type: number
           example: 350
         taken:
-            type: array
-            items:
-              type: string
-              example: '1:2'
+          type: array
+          items:
+            type: string
+            example: '1:2'
     Ticket:
       type: object
       properties:
