@@ -13,40 +13,57 @@ import { IOrderRepository } from 'src/order/order.repository';
 import { InMemoryOrderRepository } from './in-memory-order.repository';
 import { MongoOrderRepository } from './mongo-order.repository';
 import { Order, OrderSchema } from 'src/order/schemas/order.schema';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+const isMongoDriver = process.env.DATABASE_DRIVER === 'mongodb';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([
-      { name: Film.name, schema: FilmSchema },
-      { name: Order.name, schema: OrderSchema },
-    ]),
+    ...(isMongoDriver
+      ? [
+          MongooseModule.forRootAsync({
+            imports: [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+              uri: configService.get<string>('DATABASE_URL'),
+            }),
+            inject: [ConfigService],
+          }),
+          MongooseModule.forFeature([
+            { name: Film.name, schema: FilmSchema },
+            { name: Order.name, schema: OrderSchema },
+          ]),
+        ]
+      : []),
   ],
   providers: [
     configProvider,
     InMemoryFilmRepository,
-    MongoFilmRepository,
     InMemoryOrderRepository,
-    MongoOrderRepository,
+    ...(isMongoDriver ? [MongoFilmRepository, MongoOrderRepository] : []),
     {
       // Предоставляем IFilmRepository, используя фабрику для условного выбора реализации.
       provide: IFilmRepository,
       useFactory: (
         config: AppConfig,
         inMemoryRepo: InMemoryFilmRepository,
-        mongoRepo: MongoFilmRepository,
+        mongoRepo?: MongoFilmRepository,
       ) => {
         // Если драйвер MongoDB, вернется соответствующий репозиторий.
         // Иначе используется In-Memory репозиторий.
-        if (config.database.driver === 'mongodb') {
-          return mongoRepo;
+        switch (config.database.driver) {
+          case 'mongodb':
+            return mongoRepo;
+          default:
+            return inMemoryRepo;
         }
-
-        return inMemoryRepo;
       },
       inject: [
         configProvider.provide,
         InMemoryFilmRepository,
-        MongoFilmRepository,
+        {
+          token: MongoFilmRepository,
+          optional: true,
+        },
       ],
     },
     {
@@ -55,20 +72,24 @@ import { Order, OrderSchema } from 'src/order/schemas/order.schema';
       useFactory: (
         config: AppConfig,
         inMemoryRepo: InMemoryOrderRepository,
-        mongoRepo: MongoOrderRepository,
+        mongoRepo?: MongoOrderRepository,
       ) => {
         // Если драйвер MongoDB, вернется соответствующий репозиторий.
         // Иначе используется In-Memory репозиторий.
-        if (config.database.driver === 'mongodb') {
-          return mongoRepo;
+        switch (config.database.driver) {
+          case 'mongodb':
+            return mongoRepo;
+          default:
+            return inMemoryRepo;
         }
-
-        return inMemoryRepo;
       },
       inject: [
         configProvider.provide,
         InMemoryOrderRepository,
-        MongoOrderRepository,
+        {
+          token: MongoOrderRepository,
+          optional: true,
+        },
       ],
     },
   ],
