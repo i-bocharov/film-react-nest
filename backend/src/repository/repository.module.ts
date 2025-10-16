@@ -143,6 +143,6 @@ function createRepositoryProvider<T, I extends T, M extends T, P extends T>(
       PostgresOrderRepository,
     ),
   ],
-  exports: [IFilmRepository, IOrderRepository],
+  exports: [IFilmRepository, IOrderRepository, configProvider],
 })
 export class RepositoryModule {}
