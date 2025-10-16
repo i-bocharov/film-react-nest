@@ -5,5 +5,8 @@ import { OrderEntity } from './entities/order.entity';
 // Сервисы будут зависеть от него, а не от конкретной реализации.
 export abstract class IOrderRepository {
   // Мы будем создавать много заказов за раз, так что метод принимает массив
-  abstract create(orders: OrderEntity[]): Promise<OrderEntity[]>;
+  abstract create(
+    orders: OrderEntity[],
+    bookingInfo?: { email: string; phone: string },
+  ): Promise<OrderEntity[]>;
 }

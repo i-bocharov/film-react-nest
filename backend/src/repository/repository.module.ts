@@ -23,6 +23,7 @@ import { Film as FilmOrm } from 'src/films/entities/film.typeorm.entity';
 import { Schedule as ScheduleOrm } from 'src/films/entities/schedule.typeorm.entity';
 import { Order as OrderOrm } from 'src/order/entities/order.typeorm.entity';
 import { PostgresFilmRepository } from './postgres-film.repository';
+import { PostgresOrderRepository } from './postgres-order.repository';
 
 /**
  * Определяем режим работы (драйвер) на самом раннем этапе.
@@ -125,7 +126,9 @@ function createRepositoryProvider<T, I extends T, M extends T, P extends T>(
     InMemoryFilmRepository,
     InMemoryOrderRepository,
     ...(isMongoDriver ? [MongoFilmRepository, MongoOrderRepository] : []),
-    ...(isPostgresDriver ? [PostgresFilmRepository] : []),
+    ...(isPostgresDriver
+      ? [PostgresFilmRepository, PostgresOrderRepository]
+      : []),
 
     createRepositoryProvider(
       IFilmRepository,
@@ -137,7 +140,7 @@ function createRepositoryProvider<T, I extends T, M extends T, P extends T>(
       IOrderRepository,
       InMemoryOrderRepository,
       MongoOrderRepository,
-      null,
+      PostgresOrderRepository,
     ),
   ],
   exports: [IFilmRepository, IOrderRepository],

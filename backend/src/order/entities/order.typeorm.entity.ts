@@ -23,6 +23,12 @@ export class Order {
   @Column('float')
   price: number;
 
+  @Column({ nullable: true })
+  email: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
   @ManyToOne(() => Film, (film) => film.orders, {
     onDelete: 'SET NULL',
   })
