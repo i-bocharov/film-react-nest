@@ -10,7 +10,7 @@ export class OrderController {
   async create(
     @Body() bookingDto: CreateBookingDto,
   ): Promise<CreateOrderResponseDto> {
-    const createdOrders = await this.orderService.create(bookingDto.tickets);
+    const createdOrders = await this.orderService.create(bookingDto);
 
     return {
       total: createdOrders.length,
