@@ -1,10 +1,40 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, LoggerService } from '@nestjs/common';
 import { AppModule } from './app.module';
 
+// Импортируем логгеры
+import { DevLogger } from './logger/dev.logger';
+import { JsonLogger } from './logger/json.logger';
+import { TskvLogger } from './logger/tskv.logger';
+
+/**
+ * Фабричная функция для создания экземпляра логгера
+ * в зависимости от переменной окружения LOGGER_TYPE.
+ */
+function createLogger(): LoggerService {
+  switch (process.env.LOGGER_TYPE) {
+    case 'json':
+      return new JsonLogger();
+    case 'tskv':
+      return new TskvLogger();
+    case 'dev': // 'dev' или любое другое/неуказанное значение
+    default:
+      // В режиме разработки используем DevLogger, который расширяет стандартный ConsoleLogger.
+      // Он цветной и удобный для глаз.
+      return new DevLogger();
+  }
+}
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // Создаем логгер до создания приложения
+  const logger = createLogger();
+
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+
+  // Подключаем наш кастомный логгер.
+  // Теперь все логи NestJS (старт, ошибки и т.д.) пойдут через него.
+  app.useLogger(logger);
 
   app.setGlobalPrefix('api/afisha');
   app.enableCors();
