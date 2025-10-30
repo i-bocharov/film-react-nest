@@ -4,9 +4,9 @@ import { ValidationPipe, LoggerService } from '@nestjs/common';
 import { AppModule } from './app.module';
 
 // Импортируем логгеры
-import { DevLogger } from './logger/dev.logger';
-import { JsonLogger } from './logger/json.logger';
-import { TskvLogger } from './logger/tskv.logger';
+import { DevLogger } from './loggers/dev.logger';
+import { JsonLogger } from './loggers/json.logger';
+import { TskvLogger } from './loggers/tskv.logger';
 
 /**
  * Фабричная функция для создания экземпляра логгера
