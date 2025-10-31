@@ -3,7 +3,7 @@ import { fn } from '@storybook/test';
 import { ContactsForm } from './ContactsForm';
 import {useState} from "react";
 
-const meta = {
+const meta: Meta<typeof ContactsForm> = {
   title: 'UI/ContactsForm',
   component: ContactsForm,
   parameters: {

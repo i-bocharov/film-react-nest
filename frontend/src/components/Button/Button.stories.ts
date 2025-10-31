@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from './Button';
 
-const meta = {
+const meta: Meta<typeof Button> = {
   title: 'UI/Button',
   component: Button,
   parameters: {
     layout: 'centered',
   },
   args: {
-    onClick: fn()
+    onClick: fn(),
   },
 } satisfies Meta<typeof Button>;
 

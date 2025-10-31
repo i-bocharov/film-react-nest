@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { SelectSession } from './SelectSession';
 
-const meta = {
+const meta: Meta<typeof SelectSession> = {
   title: 'UI/SelectSession',
   component: SelectSession,
   parameters: {

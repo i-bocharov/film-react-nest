@@ -37,7 +37,17 @@ async function bootstrap() {
   app.useLogger(logger);
 
   app.setGlobalPrefix('api/afisha');
-  app.enableCors();
+
+  // Разрешаем кросс-доменные запросы с фронтенда
+  app.enableCors({
+    // Мы разрешаем запросы только с этого конкретного адреса.
+    origin: process.env.FRONTEND_URL,
+    // Перечисляем разрешенные HTTP-методы.
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // Разрешаем отправку "credentials" (например, cookies или заголовки авторизации).
+    // Это может понадобиться в будущем для аутентификации.
+    credentials: true,
+  });
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
