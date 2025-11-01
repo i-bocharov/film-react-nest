@@ -70,3 +70,4 @@ jobs:
           context: ./frontend
           push: true
           tags: ghcr.io/${{ github.repository }}/film-api-frontend:latest
+# Этот комментарий добавлен для повторной инициализации workflow в GitHub Actions.
