@@ -5,8 +5,10 @@ name: Build and Push Docker Images
 on:
   # 1. Автоматический запуск при каждом push-событии в ветку 'main'.
   push:
-    branches: [ "main" ]
-  
+    branches:
+      - main
+      - 'review-*' # Добавлен триггер для веток, начинающихся с 'review-'
+
   # 2. Ручной запуск (workflow_dispatch) из интерфейса GitHub.
   # Позволяет запускать workflow для любой ветки по необходимости.
   workflow_dispatch:
@@ -59,7 +61,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend # Путь к директории с Dockerfile.
-          push: true         # Публиковать образ после сборки.
+          push: true # Публиковать образ после сборки.
           # Тег образа. `github.repository` - это `имя_пользователя/имя_репозитория`.
           tags: ghcr.io/${{ github.repository }}/film-api-backend:latest
 
