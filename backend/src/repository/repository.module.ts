@@ -108,9 +108,9 @@ function createRepositoryProvider<T, I extends T, M extends T, P extends T>(
               type: 'postgres',
               host: config.get<string>('POSTGRES_HOST'),
               port: config.get<number>('POSTGRES_PORT'),
-              username: config.get<string>('POSTGRES_USERNAME'),
+              username: config.get<string>('POSTGRES_USER'),
               password: config.get<string>('POSTGRES_PASSWORD'),
-              database: config.get<string>('POSTGRES_DATABASE'),
+              database: config.get<string>('POSTGRES_DB'),
               entities: [FilmOrm, ScheduleOrm, OrderOrm],
               synchronize:
                 config.get<string>('POSTGRES_SYNCHRONIZE') === 'true',

@@ -6,15 +6,15 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- Этот блок для первоначальной настройки сервера.
 -- Его выполняет админ (postgres), чтобы создать пользователя и базу для проекта.
 
--- 1. Создаем пользователя 'student' с паролем 'your_password' (пароль нужно придумать свой).
-CREATE ROLE student WITH LOGIN PASSWORD 'your_password';
+-- 1. Создаем пользователя 'afisha_dev_user' с паролем 'your_password' (пароль нужно придумать свой).
+CREATE ROLE afisha_dev_user WITH LOGIN PASSWORD 'your_password';
 
--- 2. Создаем базу данных 'afisha' и сразу делаем 'student' ее владельцем.
-CREATE DATABASE afisha WITH OWNER student;
+-- 2. Создаем базу данных 'afisha' и сразу делаем 'afisha_dev_user' ее владельцем.
+CREATE DATABASE afisha WITH OWNER afisha_dev_user;
 */
 
 
--- Дальше все команды нужно выполнять, подключившись к базе 'afisha' под пользователем 'student'.
+-- Дальше все команды нужно выполнять, подключившись к базе 'afisha' под пользователем 'afisha_dev_user'.
 
 
 -- --- Таблица для Фильмов ---
@@ -39,8 +39,8 @@ CREATE TABLE public.films
     cover       varchar
 );
 
--- Указываем, что таблицей владеет наш пользователь 'student'.
-ALTER TABLE public.films OWNER TO student;
+-- Указываем, что таблицей владеет наш пользователь 'afisha_dev_user'.
+ALTER TABLE public.films OWNER TO afisha_dev_user;
 
 
 -- --- Таблица для Сеансов ---
@@ -65,7 +65,7 @@ CREATE TABLE public.schedules
         FOREIGN KEY ("filmId") REFERENCES public.films(id) ON DELETE CASCADE
 );
 
-ALTER TABLE public.schedules OWNER TO student;
+ALTER TABLE public.schedules OWNER TO afisha_dev_user;
 
 
 -- --- Таблица для Заказов ---
@@ -96,4 +96,4 @@ CREATE TABLE public.orders
         FOREIGN KEY ("scheduleId") REFERENCES public.schedules(id) ON DELETE CASCADE
 );
 
-ALTER TABLE public.orders OWNER TO student;
+ALTER TABLE public.orders OWNER TO afisha_dev_user;
