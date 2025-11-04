@@ -6,7 +6,7 @@ services:
   backend:
     build:
       context: ./backend
-    image: ghcr.io/i-bocharov/film-api-backend:latest
+    image: ghcr.io/i-bocharov/film-react-nest/film-api-backend:latest
     container_name: film-api-backend
     restart: always
     env_file:
@@ -65,7 +65,7 @@ services:
   frontend:
     build:
       context: ./frontend
-    image: ghcr.io/i-bocharov/film-api-frontend:latest
+    image: ghcr.io/i-bocharov/film-react-nest/film-api-frontend:latest
     container_name: film-api-frontend-builder
     volumes:
       - frontend_dist:/app/
