@@ -40,7 +40,7 @@ CREATE TABLE public.films
 );
 
 -- Указываем, что таблицей владеет наш пользователь 'afisha_dev_user'.
-ALTER TABLE public.films OWNER TO afisha_dev_user;
+ALTER TABLE public.films OWNER TO :"db_user";
 
 
 -- --- Таблица для Сеансов ---
@@ -65,7 +65,7 @@ CREATE TABLE public.schedules
         FOREIGN KEY ("filmId") REFERENCES public.films(id) ON DELETE CASCADE
 );
 
-ALTER TABLE public.schedules OWNER TO afisha_dev_user;
+ALTER TABLE public.schedules OWNER TO :"db_user";
 
 
 -- --- Таблица для Заказов ---
@@ -96,4 +96,4 @@ CREATE TABLE public.orders
         FOREIGN KEY ("scheduleId") REFERENCES public.schedules(id) ON DELETE CASCADE
 );
 
-ALTER TABLE public.orders OWNER TO afisha_dev_user;
+ALTER TABLE public.orders OWNER TO :"db_user";
