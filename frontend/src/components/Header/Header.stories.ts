@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Header } from './Header';
 
-const meta = {
+const meta: Meta<typeof Header> = {
   title: 'UI/Header',
   component: Header,
   parameters: {
     layout: 'centered',
   },
   args: {
-    onClick: fn()
+    onClick: fn(),
   },
 } satisfies Meta<typeof Header>;
 

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { ModalHeader } from './ModalHeader';
 
-const meta = {
+const meta: Meta<typeof ModalHeader> = {
   title: 'UI/ModalHeader',
   component: ModalHeader,
   parameters: {

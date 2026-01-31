@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Basket } from './Basket';
 
-const meta = {
+const meta: Meta<typeof Basket> = {
   title: 'UI/Basket',
   component: Basket,
   parameters: {

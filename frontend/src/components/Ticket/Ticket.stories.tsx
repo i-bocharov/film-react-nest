@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Ticket } from './Ticket';
 
-const meta = {
+const meta: Meta<typeof Ticket> = {
   title: 'UI/Ticket',
   component: Ticket,
   parameters: {

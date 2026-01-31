@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Message } from './Message.tsx';
 
-const meta = {
+const meta: Meta<typeof Message> = {
   title: 'UI/Message',
   component: Message,
   parameters: {

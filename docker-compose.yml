@@ -1,0 +1,85 @@
+# Определяет имя проекта, которое используется для префиксации ресурсов Docker.
+name: film-project
+
+services:
+  # Сервис бэкенда: NestJS API.
+  backend:
+    build:
+      context: ./backend
+    image: ghcr.io/i-bocharov/film-react-nest/film-api-backend:latest
+    container_name: film-api-backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - database
+    networks:
+      - film-network
+
+  # Сервис базы данных: PostgreSQL
+  database:
+    image: postgres:15-alpine
+    container_name: film-api-db
+    restart: always
+    env_file:
+      - ./backend/.env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - film-network
+
+  # Сервис pgAdmin: веб-интерфейс для управления БД.
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: film-api-pgadmin    
+    restart: always
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8081:80"
+    depends_on:
+      - database
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - film-network
+
+  # Сервис Nginx: является точкой входа и реверс-прокси для всего приложения.
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: film-api-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - frontend_dist:/usr/share/nginx/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - film-network
+
+  # Сервис-сборщик фронтенда: запускается, собирает статику и завершается.
+  frontend:
+    build:
+      context: ./frontend
+    image: ghcr.io/i-bocharov/film-react-nest/film-api-frontend:latest
+    container_name: film-api-frontend-builder
+    volumes:
+      - frontend_dist:/app/
+    networks:
+      - film-network
+
+# Определяет общую виртуальную сеть для коммуникации между сервисами.
+networks:
+  film-network:
+    driver: bridge
+
+# Декларирует именованные volumes для персистентного хранения данных.
+volumes:
+  db_data:
+  pgadmin_data:
+  frontend_dist:
+ 
