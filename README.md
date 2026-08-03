@@ -1,7 +1,5 @@
 # FILM!
 
-Проект размещен в сети по ссылке [https://i-bocharov-project.nomorepartiessbs.ru/](https://i-bocharov-project.nomorepartiessbs.ru/)
-
 ## Установка
 
 ### MongoDB
